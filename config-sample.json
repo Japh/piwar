@@ -1,4 +1,4 @@
 {
   "dbFileName": "./db/networks.sqlite",
-  "debug": "true"
+  "debug": "false"
 }

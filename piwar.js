@@ -4,7 +4,9 @@ var wifiscanner = require('wifiscanner')
   , config = require('./config');
 
 exports.setup = function(state) {
-  console.log("Initialize PiWar...\n");
+  if (config.debug == "true")
+    console.log("Initialize PiWar...\n");
+
   var deferred = Q.defer();
 
   state.scanner = wifiscanner();
@@ -18,28 +20,36 @@ exports.setup = function(state) {
 };
 
 exports.checkdb = function(state) {
-  console.log("Checking DB...\n");
+  if (config.debug == "true")
+    console.log("Checking DB...\n");
+
   var deferred = Q.defer();
 
   state.db.serialize(function() {
-    console.log("Retrieving table from the DB...\n");
-    console.log("Found:");
+    if (config.debug == "true") {
+      console.log("Retrieving table from the DB...\n");
+      console.log("Found:");
+    }
     state.db.each("SELECT name FROM sqlite_master WHERE type='table' AND name='networks'", function(err, row) {
       if (err) {
         deferred.reject( err );
       } else {
-        console.log(" - " + JSON.stringify(row) + "\n");
+        if (config.debug == "true")
+          console.log(" - " + JSON.stringify(row) + "\n");
       }
     }, function(err, rowCount) {
       if (err) {
         deferred.reject( err );
       } else {
-        console.log("Number of rows found: " + rowCount + "\n");
+        if (config.debug == "true")
+          console.log("Number of rows found: " + rowCount + "\n");
         if (rowCount > 0) {
-          console.log("Table exists.\n");
+          if (config.debug == "true")
+            console.log("Table exists.\n");
           state.table_exists = true;
         } else {
-          console.log("Table not found.\n");
+          if (config.debug == "true")
+            console.log("Table not found.\n");
           state.table_exists = false;
         }
         deferred.resolve(state);
@@ -51,11 +61,14 @@ exports.checkdb = function(state) {
 }
 
 exports.primedb = function(state) {
-  console.log("Preparing DB...\n");
+  if (config.debug == "true")
+    console.log("Preparing DB...\n");
+
   var deferred = Q.defer();
 
   if ( ! state.table_exists ) {
-    console.log("Creating table.\n");
+    if (config.debug == "true")
+      console.log("Creating table.\n");
     state.db.run("CREATE TABLE networks (ssid TEXT, mac TEXT, channel TEXT, security TEXT, related TEXT)",[],function(err) {
       if (err) {
         deferred.reject(err);
@@ -71,15 +84,19 @@ exports.primedb = function(state) {
 };
 
 exports.preload = function(state) {
-  console.log("Retrieving data from DB...\n");
+  if (config.debug == "true")
+    console.log("Retrieving data from DB...\n");
+
   var deferred = Q.defer();
 
-  console.log("Networks retrieved:\n");
+  if (config.debug == "true")
+    console.log("Networks retrieved:\n");
   state.db.each("SELECT ssid FROM networks", function(err, row) {
     if ( err ) {
       deferred.reject( err );
     } else {
-      console.log(" - " + JSON.stringify(row) + "\n");
+      if (config.debug == "true")
+        console.log(" - " + JSON.stringify(row) + "\n");
       state.networks.push(row.ssid);
     }
   }, function(err, rowCount) {
@@ -94,7 +111,9 @@ exports.preload = function(state) {
 };
 
 exports.scan = function(state) {
-  console.log("Scanning for wifi networks...\n");
+  if (config.debug == "true")
+    console.log("Scanning for wifi networks...\n");
+
   var deferred = Q.defer();
 
   state.scanner.scan(function(error, networks) {
@@ -110,7 +129,8 @@ exports.scan = function(state) {
               related.push(networks[j].ssid);
             }
           }
-          console.log("Adding SSID " + networks[i].ssid + " to database.\n");
+          if (config.debug == "true")
+            console.log("Adding SSID " + networks[i].ssid + " to database.\n");
           stmt.run(networks[i].ssid, networks[i].mac, networks[i].channel, JSON.stringify(networks[i].security), JSON.stringify( related ));
           state.networks.push(networks[i].ssid);
         }
@@ -124,7 +144,9 @@ exports.scan = function(state) {
 };
 
 exports.cleanup = function(state) {
-  console.log("Cleaning up.\n");
+  if (config.debug == "true")
+    console.log("Cleaning up.\n");
+
   var deferred = Q.defer();
 
   state.db.close();
