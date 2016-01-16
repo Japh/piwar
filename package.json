@@ -2,7 +2,7 @@
   "name": "piwar",
   "version": "0.0.1",
   "description": "",
-  "main": "piwar.js",
+  "main": "run.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/Japh/piwar#readme",
   "dependencies": {
+    "q": "^1.4.1",
+    "sqlite3": "^3.1.1",
     "wifiscanner": "0.0.10"
   }
 }
