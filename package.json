@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Japh/piwar/issues"
   },
-  "homepage": "https://github.com/Japh/piwar#readme"
+  "homepage": "https://github.com/Japh/piwar#readme",
+  "dependencies": {
+    "wifiscanner": "0.0.10"
+  }
 }
