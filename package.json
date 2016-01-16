@@ -1,0 +1,19 @@
+{
+  "name": "piwar",
+  "version": "0.0.1",
+  "description": "",
+  "main": "piwar.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Japh/piwar.git"
+  },
+  "author": "Japh",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Japh/piwar/issues"
+  },
+  "homepage": "https://github.com/Japh/piwar#readme"
+}
