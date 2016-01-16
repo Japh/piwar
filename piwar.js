@@ -110,6 +110,7 @@ exports.scan = function(state) {
               related.push(networks[j].ssid);
             }
           }
+          console.log("Adding SSID " + networks[i].ssid + " to database.\n");
           stmt.run(networks[i].ssid, networks[i].mac, networks[i].channel, JSON.stringify(networks[i].security), JSON.stringify( related ));
           state.networks.push(networks[i].ssid);
         }
@@ -123,6 +124,7 @@ exports.scan = function(state) {
 };
 
 exports.cleanup = function(state) {
+  console.log("Cleaning up.\n");
   var deferred = Q.defer();
 
   state.db.close();
