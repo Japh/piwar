@@ -1,6 +1,6 @@
 var wifiscanner = require('wifiscanner')
   , sqlite3 = require('sqlite3').verbose()
-  , Q = require('Q')
+  , Q = require('q')
   , config = require('./config');
 
 exports.setup = function(state) {
