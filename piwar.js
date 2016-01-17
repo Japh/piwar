@@ -126,7 +126,7 @@ exports.scan = function(state) {
           var related = [];
           for (var j = 0; j < networks.length; j++) {
             if (networks[i].ssid != networks[j].ssid) {
-              related.push(networks[j].ssid);
+              related.push(networks[j]);
             }
           }
           if (config.debug == "true")
