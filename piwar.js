@@ -120,7 +120,7 @@ exports.scan = function(state) {
     if ( error ) {
       deferred.reject( error );
     } else {
-      var stmt = state.db.prepare("INSERT INTO networks VALUES (?,?,?,?,?)");
+      var stmt = state.db.prepare("INSERT INTO networks VALUES (?,?,?,?,?,CURRENT_TIMESTAMP)");
       for (var i = 0; i < networks.length; i++) {
         if ( ! in_array( networks[i].ssid, state.networks ) ) {
           var related = [];
