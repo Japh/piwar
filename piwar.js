@@ -69,7 +69,7 @@ exports.primedb = function(state) {
   if ( ! state.table_exists ) {
     if (config.debug == "true")
       console.log("Creating table.\n");
-    state.db.run("CREATE TABLE networks (ssid TEXT, mac TEXT, channel TEXT, security TEXT, related TEXT)",[],function(err) {
+    state.db.run("CREATE TABLE networks (ssid TEXT, mac TEXT, channel TEXT, security TEXT, related TEXT, created TIMESTAMP DEFAULT CURRENT_TIMESTAMP)",[],function(err) {
       if (err) {
         deferred.reject(err);
       } else {
